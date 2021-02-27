@@ -59,8 +59,8 @@ const Todo = () => {
         var csrftoken = getCookie('csrftoken');
         var url = 'http://127.0.0.1:8000/api/task-create/'
 
-        if(editing == true){
-            url = `http://127.0.0.1:8000/api/task-update/${activeItem.id}`
+        if(editing === true){
+            url = `http://127.0.0.1:8000/api/task-update/${activeItem.id}/`
             setEditing(false)
         }
         
@@ -92,7 +92,7 @@ const Todo = () => {
         var csrftoken = getCookie('csrftoken')
 
         fetch(
-            `http://127.0.0.1:8000/api/task-delete/${task.id}`, 
+            `http://127.0.0.1:8000/api/task-delete/${task.id}/`, 
             {method:'DELETE',
             headers:{
                 'Content-type':'application/json',
@@ -107,7 +107,7 @@ const Todo = () => {
         task.is_completed = !task.is_completed
 
         var csrftoken = getCookie('csrftoken')
-        var url = `http://127.0.0.1:8000/api/task-update/${task.id}`
+        var url = `http://127.0.0.1:8000/api/task-update/${task.id}/`
 
         fetch(url, {
             method:'POST',
@@ -136,7 +136,7 @@ const Todo = () => {
                         return <div  key={task.id} className='task-wrapper'>
                                     
                                     <div className='task-title-wrapper' onClick={() => editTaskStatus(task)}>
-                                        {task.is_completed == false ? (
+                                        {task.is_completed === false ? (
                                             <span className='task-span'>{task.title}</span>
                                         ) : (
                                             <span className='task-span'>

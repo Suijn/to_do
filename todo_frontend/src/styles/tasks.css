@@ -9,6 +9,11 @@
     cursor: pointer;
     background-color: #d9e8eb;
   }
+
+  .task-wrapper:hover{
+    cursor: pointer;
+    background-color: #d9e8eb;
+  }
   
   .task-title-wrapper{
     flex: 2;
@@ -22,8 +27,9 @@
   .btn-wrapper{
     margin-top: auto;
     margin-bottom: auto;
-    margin-right: 15px;
+    margin-right: 55px;
   }
+
   
   .task-span{
     display: inline-block;
@@ -33,9 +39,6 @@
     color: #808080;
   }
   
-  .btn-wrapper{
-    margin-right: 40px;
-  }
   
   .edit-btn, .delete-btn{
     border: 1px solid;
