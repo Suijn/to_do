@@ -1,18 +1,23 @@
 #form-wrapper{
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 50px;
-    display:flex;
   }
   
+form{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
   #input-field{
-    border: 1px solid ;
+    flex: 1;
+    border: 1px solid;
     border-color: #CDD9ED;
     border-radius: 7px;
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 15px;
     transition: background-color 0.5s ease;
-    min-width: 330px;
+
   }
   
   #input-field:hover{
@@ -34,10 +39,6 @@
   }
 
   @media (max-width: 600px) {
-    #input-field{
-      min-width: 250px;
-    }
-
     #submit-button{
       display: none;
     }

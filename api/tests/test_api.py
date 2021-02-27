@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.urls import reverse, resolve
-import status
+from rest_framework import status
 import json
 from ..models import Task
 from ..serializers import TaskSerializer
@@ -34,7 +34,7 @@ class TestApi(TestCase):
     def test_task_list(self):
         response = self.client.get(reverse('task-list'))
 
-        tasks = Task.objects.all()
+        tasks = Task.objects.all().order_by('-id')
         serializer = TaskSerializer(tasks, many=True)
 
         self.assertEqual(response.data, serializer.data)
