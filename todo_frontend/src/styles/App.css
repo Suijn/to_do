@@ -1,0 +1,29 @@
+@import "reset.css";
+@import "form.css";
+@import "tasks.css";
+
+body{
+  background-color: #3da8bb;
+  background: linear-gradient(90deg,#823dbb,#3da8bb);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.container{
+  max-width: 600px;
+  margin: 100px auto;
+}
+
+#task-container{
+  background-color: white;
+  /* margin-top: 100px; */
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+@media (max-width: 600px) {
+  .container{
+    max-width: 360px;
+  }
+}
+
+
+

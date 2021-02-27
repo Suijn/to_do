@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import TaskSerializer
+from rest_framework import status
 
 from .models import Task
 
@@ -20,7 +21,7 @@ def apiOverview(request):
 
 @api_view(['GET'])
 def taskList(request):
-    tasks = Task.objects.all()
+    tasks = Task.objects.all().order_by('-id')
     serializer = TaskSerializer(tasks, many=True)
 
     return Response(serializer.data)
@@ -28,9 +29,12 @@ def taskList(request):
 
 @api_view(['GET'])
 def task(request, pk):
-    task = Task.objects.get(id=pk)
+    try:
+        task = Task.objects.get(id=pk)
+    except Task.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
     serializer = TaskSerializer(task, many=False)
-
     return Response(serializer.data)
 
 
@@ -40,7 +44,8 @@ def taskCreate(request):
 
     if serializer.is_valid():
         serializer.save()
-    return Response(serializer.data)
+        return Response(serializer.data, status = status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
