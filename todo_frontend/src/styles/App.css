@@ -15,15 +15,21 @@ body{
 
 #task-container{
   background-color: white;
-  /* margin-top: 100px; */
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 600px){
   .container{
     max-width: 360px;
+    margin: 50px auto
   }
 }
+
+@media (max-height: 190px){
+    .container{
+      margin-top: 0px;
+    }
+  }
 
 
 

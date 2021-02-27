@@ -1,6 +1,5 @@
 .task-wrapper{
     display: flex;
-    justify-content: space-between;
     color: black;
     border-bottom: 1px solid #CDD9ED;
     transition: background-color 0.5 ease ;
