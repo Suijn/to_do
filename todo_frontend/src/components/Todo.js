@@ -152,18 +152,16 @@ const Todo = () => {
                 </div>
                 <div id='list-wrapper'>
                 {tasks.map(task => {
-                        return <div  key={task.id} className='task-wrapper' onClick={() => editTaskStatus(task)}>
-                                    
+                        return <div  key={task.id} className='task-wrapper'>
+                                    <button onClick={() => editTaskStatus(task)} className='checkbox'>✔</button>
                                     <div className='task-title-wrapper' >
-                                        {task.is_completed === false ? (
-                                            <span className='task-span'>{task.title}</span>
+                                        {task.is_completed === false ? 
+                                        (
+                                                <span className='task-span'>{task.title}</span>
                                         ) : (
-                                            <span className='task-span'>
-                                                <strike>
-                                                    {task.title}
-                                                </strike>
-                                                
-                                            </span>
+                                                <span className='task-span'>
+                                                    <strike>{task.title}</strike>
+                                                </span>
                                         )}
                                     </div>
                                     

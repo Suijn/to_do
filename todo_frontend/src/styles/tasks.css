@@ -1,15 +1,12 @@
 .task-wrapper{
     display: flex;
+    justify-content: space-around;
+    align-items: center;
     color: black;
     border-bottom: 1px solid #CDD9ED;
     transition: background-color 0.5 ease ;
   }
   
-  .task-wrapper:hover{
-    cursor: pointer;
-    background-color: #d9e8eb;
-  }
-
   .task-wrapper:hover{
     cursor: pointer;
     background-color: #d9e8eb;
@@ -25,9 +22,7 @@
   }
   
   .btn-wrapper{
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-right: 55px;
+    margin-right: 20px;
   }
 
   
@@ -35,13 +30,12 @@
     display: inline-block;
     margin-top: auto;
     margin-bottom: auto;
-    margin-left: 45px;
+    margin-left: 10px;
     color: #808080;
   }
   
   
-  .edit-btn, .delete-btn{
-    z-index: 3;
+  .edit-btn, .delete-btn, .checkbox{
     border: 1px solid;
     border-radius: 7px;
     background-color: white;
@@ -51,8 +45,13 @@
     color: #3da8bb;
     transition: 0.5s ease;
   }
-  
-  .edit-btn:hover, #submit-button:hover{
+
+  .checkbox{
+    margin-left: 20px;
+    
+}
+
+ .edit-btn:hover, #submit-button:hover, .checkbox:hover{
     border: 1px solid #CDD9ED;
     background-color: #3da8bb;
     color: white;
