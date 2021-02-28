@@ -39,8 +39,15 @@ form{
   }
 
   @media (max-width: 600px) {
-    #submit-button{
-      display: none;
+    #form-wrapper{
+        padding: 25px 50px;
     }
-    
+    form{
+        flex-direction: column;
+        justify-content: center;
+    }
+    #submit-button{
+        margin-left: 0px;
+        margin-top: 25px;
+    }
   }

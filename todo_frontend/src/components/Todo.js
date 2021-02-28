@@ -153,7 +153,9 @@ const Todo = () => {
                 <div id='list-wrapper'>
                 {tasks.map(task => {
                         return <div  key={task.id} className='task-wrapper'>
-                                    <button onClick={() => editTaskStatus(task)} className='checkbox'>✔</button>
+                                    <button
+                                        onClick={() => editTaskStatus(task)}
+                                        className='checkbox'>✔</button>
                                     <div className='task-title-wrapper' >
                                         {task.is_completed === false ? 
                                         (
