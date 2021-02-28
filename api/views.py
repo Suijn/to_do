@@ -49,20 +49,25 @@ def taskCreate(request):
 
 
 
-@api_view(['POST'])
+@api_view(['PUT'])
 def taskUpdate(request, pk):
     task = Task.objects.get(id=pk)
     serializer = TaskSerializer(instance=task, data=request.data)
 
     if serializer.is_valid():
         serializer.save()
-    return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 
 @api_view(['DELETE'])
 def taskDelete(request, pk):
-    task = Task.objects.get(id=pk)
+    try:
+        task = Task.objects.get(id=pk)
+    except Task.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+        
     task.delete()
     return Response("Item succesfully deleted!")
 

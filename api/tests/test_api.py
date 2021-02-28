@@ -70,3 +70,35 @@ class TestApi(TestCase):
             data=json.dumps(self.data_invalid), 
             content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+    def test_update_task_valid(self):
+        response = self.client.put(
+            reverse('task-update', kwargs={'pk': self.task_1.id}),
+            data = json.dumps(self.data_valid),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    
+
+    def test_update_task_invalid(self):
+        response = self.client.put(
+            reverse('task-update', kwargs={'pk': self.task_1.id}),
+            data= json.dumps(self.data_invalid),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+    def test_delete_task_valid(self):
+        response = self.client.delete(
+            reverse('task-delete', kwargs={'pk': self.task_1.id})
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    
+    def test_delete_task_invalid(self):
+        response = self.client.delete(
+            reverse('task-delete', kwargs={'pk': 30})
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

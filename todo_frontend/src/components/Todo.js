@@ -62,25 +62,44 @@ const Todo = () => {
         if(editing === true){
             url = `http://127.0.0.1:8000/api/task-update/${activeItem.id}/`
             setEditing(false)
+            fetch(url, {
+                method:'PUT',
+                headers:{
+                    'Content-type':'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body:JSON.stringify(activeItem)})
+                .then((response) => {
+                    fetchTasks()
+                    setItem({
+                        id: null,
+                        title: '',
+                        is_completed: false,
+                    })})
+                .catch(function(error){
+                console.log('ERROR: ', error)
+            })
+        }else{
+            fetch(url, {
+                method:'POST',
+                headers:{
+                    'Content-type':'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body:JSON.stringify(activeItem)})
+                .then((response) => {
+                    fetchTasks()
+                    setItem({
+                        id: null,
+                        title: '',
+                        is_completed: false,
+                    })})
+                .catch(function(error){
+                console.log('ERROR: ', error)
+            })
         }
         
-        fetch(url, {
-            method:'POST',
-            headers:{
-                'Content-type':'application/json',
-                'X-CSRFToken': csrftoken
-            },
-            body:JSON.stringify(activeItem)})
-            .then((response) => {
-                fetchTasks()
-                setItem({
-                    id: null,
-                    title: '',
-                    is_completed: false,
-                })})
-            .catch(function(error){
-            console.log('ERROR: ', error)
-        })
+        
         }
 
     function edit(task){
@@ -110,7 +129,7 @@ const Todo = () => {
         var url = `http://127.0.0.1:8000/api/task-update/${task.id}/`
 
         fetch(url, {
-            method:'POST',
+            method:'PUT',
             headers:{
                 'Content-type':'application/json',
                 'X-CSRFToken': csrftoken,
