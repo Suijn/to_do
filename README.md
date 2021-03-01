@@ -17,5 +17,5 @@ Endpoints: [
    
 ]
 
-## Working live
+## Live
 Link: https://todoapphub.herokuapp.com/
