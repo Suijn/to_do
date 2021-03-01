@@ -33,7 +33,6 @@
     margin-left: 10px;
     color: #808080;
     word-wrap: break-word;
-    max-width: 110px;
   }
   
   
@@ -75,5 +74,9 @@
   @Media (max-width: 600px){
     .btn-wrapper{
       margin-right: 0px;
+    }
+
+    .task-span{
+        max-width: 110px;
     }
   }
