@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 from corsheaders.defaults import default_headers
 import os
+import django_heroku
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,12 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#o7@rqp_12t(3us_psh$rg$3cx6a%*h96kw0v+@kzsb25#78=1'
+# SECRET_KEY = '#o7@rqp_12t(3us_psh$rg$3cx6a%*h96kw0v+@kzsb25#78=1'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['todoapphub.herokuapp.com']
+ALLOWED_HOSTS = ['todoapphub.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -63,7 +65,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'todo_frontend/build')
+            os.path.join(BASE_DIR, 'build')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -141,5 +143,7 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'todo_frontend/build/static')
+    os.path.join(BASE_DIR, 'build/static')
 ]
+
+django_heroku.settings(locals())
