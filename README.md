@@ -1,4 +1,4 @@
-# Read me 
+# To do app
 
 ## Endpoints
 Api Overview endpoint: https://todoapphub.herokuapp.com/api/
