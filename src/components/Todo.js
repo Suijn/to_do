@@ -34,7 +34,7 @@ const Todo = () => {
 
     function fetchTasks(){
         console.log('Fetching...')
-        fetch('http://127.0.0.1:8000/api/task-list/')
+        fetch('https://todoapphub.herokuapp.com/api/task-list/')
         .then(response => response.json())
         .then(data => 
             setTasks(data)
@@ -57,10 +57,10 @@ const Todo = () => {
         console.log('ITEM: ', activeItem)
 
         var csrftoken = getCookie('csrftoken');
-        var url = 'http://127.0.0.1:8000/api/task-create/'
+        var url = 'https://todoapphub.herokuapp.com/api/task-create/'
 
         if(editing === true){
-            url = `http://127.0.0.1:8000/api/task-update/${activeItem.id}/`
+            url = `https://todoapphub.herokuapp.com/api/task-update/${activeItem.id}/`
             setEditing(false)
             fetch(url, {
                 method:'PUT',
@@ -111,7 +111,7 @@ const Todo = () => {
         var csrftoken = getCookie('csrftoken')
 
         fetch(
-            `http://127.0.0.1:8000/api/task-delete/${task.id}/`, 
+            `https://todoapphub.herokuapp.com/api/task-delete/${task.id}/`, 
             {method:'DELETE',
             headers:{
                 'Content-type':'application/json',
@@ -126,7 +126,7 @@ const Todo = () => {
         task.is_completed = !task.is_completed
 
         var csrftoken = getCookie('csrftoken')
-        var url = `http://127.0.0.1:8000/api/task-update/${task.id}/`
+        var url = `https://todoapphub.herokuapp.com/api/task-update/${task.id}/`
 
         fetch(url, {
             method:'PUT',
