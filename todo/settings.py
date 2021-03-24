@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 from corsheaders.defaults import default_headers
 import os
+import django_heroku
 
 
 
@@ -140,11 +141,6 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:3000'
 ]
 
-# CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ALLOW_HEADERS = list(default_headers) + [
-#     'body',
-# ]
-
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'build/static')
@@ -154,3 +150,5 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',)
 }
+
+django_heroku.settings(locals())
