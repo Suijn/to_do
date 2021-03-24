@@ -142,9 +142,9 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'build/static')
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'build/static')
+# ]
 
 
 REST_FRAMEWORK = {
