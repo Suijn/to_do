@@ -81,7 +81,7 @@ export const axiosInterceptor = axios.interceptors.response.use(response => {
                         
                     }
     
-                    noInterceptAxios.post('http://127.0.0.1:8000/users/api/token/refresh/', body, config)
+                    noInterceptAxios.post('https://to-do-app-hub.herokuapp.com/users/api/token/refresh/', body, config)
                         .then(res =>{
                                 localStorage.setItem('token',res.data.access)
                                 store.dispatch({
