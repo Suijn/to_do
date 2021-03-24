@@ -7,6 +7,9 @@ from rest_framework import status
 
 from .models import Task
 
+
+
+
 @api_view(['GET'])
 def apiOverview(request):
     api_urls = {
@@ -21,7 +24,7 @@ def apiOverview(request):
 
 @api_view(['GET'])
 def taskList(request):
-    tasks = Task.objects.all().order_by('-id')
+    tasks = Task.objects.filter(user=request.user).order_by('-id')
     serializer = TaskSerializer(tasks, many=True)
 
     return Response(serializer.data)
@@ -43,7 +46,7 @@ def taskCreate(request):
     serializer = TaskSerializer(data=request.data)
 
     if serializer.is_valid():
-        serializer.save()
+        serializer.save(user=request.user)
         return Response(serializer.data, status = status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -70,4 +73,4 @@ def taskDelete(request, pk):
         
     task.delete()
     return Response("Item succesfully deleted!")
-
+    

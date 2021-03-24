@@ -6,7 +6,9 @@ from ..views import (
     task,
     taskCreate,
     taskUpdate,
-    taskDelete)
+    taskDelete
+)
+
 
 class TestUrls(SimpleTestCase):
     
@@ -38,3 +40,4 @@ class TestUrls(SimpleTestCase):
     def test_task_delete_resolves(self):
         url = reverse('task-delete', args = {'pk'})
         self.assertEquals(resolve(url).func, taskDelete)
+

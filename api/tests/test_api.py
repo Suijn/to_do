@@ -4,37 +4,59 @@ from rest_framework import status
 import json
 from ..models import Task
 from ..serializers import TaskSerializer
+from django.contrib.auth.models import User
+from rest_framework.test import APIClient
+
 
 class TestApi(TestCase):
 
 
     def setUp(self):
         self.client = Client()
-        self.task_1 = Task.objects.create(title="Task 1")
-        self.task_2 = Task.objects.create(title="Task 2")
+
+        self.user = User.objects.create_user(username='user', password='password')
+        user = {
+            'username': 'user',
+            'password': 'password',
+        }
+
+        response = self.client.post(
+            reverse('get-tokens'),
+            user, format='json',
+            content_type='application/json'
+        )
+        self.token = response.data['access']
+        self.refreshToken = response.data['refresh']
+
+        self.task_1 = Task.objects.create(title="Task 1", user=self.user)
+        self.task_2 = Task.objects.create(title="Task 2", user=self.user)
 
         self.api_urls = {
-        'List':'/task-list/',
-        'Task':'/task/<str:pk>/',
-        'Create':'/task-create/',
-        'Update':'/task-update/<str:pk>/',
-        'Delete':'/task-delete/<str:pk>/',
+            'List':'/task-list/',
+            'Task':'/task/<str:pk>/',
+            'Create':'/task-create/',
+            'Update':'/task-update/<str:pk>/',
+            'Delete':'/task-delete/<str:pk>/',
         }
 
         self.data_invalid = {'title': ''}
         self.data_valid = {'title': 'Task 3'}
 
+        self.apiClient = APIClient()
+        self.apiClient.credentials(HTTP_AUTHORIZATION='Bearer ' + self.token)
+
+
     def test_api_overview(self):
-        response = self.client.get(reverse('api-overview'))
+        response = self.apiClient.get(reverse('api-overview'))
 
         self.assertEqual(response.data, self.api_urls)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
     def test_task_list(self):
-        response = self.client.get(reverse('task-list'))
+        response = self.apiClient.get(reverse('task-list'))
 
-        tasks = Task.objects.all().order_by('-id')
+        tasks = Task.objects.filter(user=self.user).order_by('-id')
         serializer = TaskSerializer(tasks, many=True)
 
         self.assertEqual(response.data, serializer.data)
@@ -42,7 +64,7 @@ class TestApi(TestCase):
 
 
     def test_get_task(self):
-        response = self.client.get(reverse('task-get', args={self.task_1.id}))
+        response = self.apiClient.get(reverse('task-get', args={self.task_1.id}))
 
         task = Task.objects.get(id=self.task_1.id)
         serializer = TaskSerializer(task, many=False)
@@ -52,12 +74,12 @@ class TestApi(TestCase):
 
 
     def test_get_task_invalid(self):
-        response = self.client.get(reverse('task-get', args={10}))
+        response = self.apiClient.get(reverse('task-get', args={10}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     
     def test_create_task_valid(self):
-        response = self.client.post(
+        response = self.apiClient.post(
             reverse('task-create'), 
             data=json.dumps(self.data_valid), 
             content_type='application/json')
@@ -65,7 +87,7 @@ class TestApi(TestCase):
 
     
     def test_create_task_invalid(self):
-        response = self.client.post(
+        response = self.apiClient.post(
             reverse('task-create'), 
             data=json.dumps(self.data_invalid), 
             content_type='application/json')
@@ -73,7 +95,8 @@ class TestApi(TestCase):
 
 
     def test_update_task_valid(self):
-        response = self.client.put(
+        self.assertTrue(Task.objects.all().get(id=self.task_1.id).user == self.user)
+        response = self.apiClient.put(
             reverse('task-update', kwargs={'pk': self.task_1.id}),
             data = json.dumps(self.data_valid),
             content_type='application/json'
@@ -82,7 +105,7 @@ class TestApi(TestCase):
     
 
     def test_update_task_invalid(self):
-        response = self.client.put(
+        response = self.apiClient.put(
             reverse('task-update', kwargs={'pk': self.task_1.id}),
             data= json.dumps(self.data_invalid),
             content_type='application/json'
@@ -91,14 +114,15 @@ class TestApi(TestCase):
 
 
     def test_delete_task_valid(self):
-        response = self.client.delete(
+        self.assertTrue(Task.objects.all().get(id=self.task_1.id).user == self.user)
+        response = self.apiClient.delete(
             reverse('task-delete', kwargs={'pk': self.task_1.id})
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    
+
     def test_delete_task_invalid(self):
-        response = self.client.delete(
+        response = self.apiClient.delete(
             reverse('task-delete', kwargs={'pk': 30})
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

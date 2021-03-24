@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import Logout from './Logout'
+
+import {connect, useSelector, useDispatch} from 'react-redux'
+import {getItems, addItem, editItem, deleteTask, editItemStatus} from '../actions/taskActions'
+import { Redirect } from 'react-router';
+
 
 const Todo = () => {
-    const [tasks, setTasks] = useState([])
+    let tasks = useSelector(state => state.tasks.tasks)
+    const dispatch = useDispatch()
+
     const [activeItem, setItem] = useState({
         id: null,
         title: '',
@@ -11,41 +19,13 @@ const Todo = () => {
         editing: false
     })
 
-    console.log('render')
     useEffect(() => {
-        fetchTasks()
+        dispatch(getItems())
     }, [])
 
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-
-    function fetchTasks(){
-        console.log('Fetching...')
-        fetch('https://todoapphub.herokuapp.com/api/task-list/')
-        .then(response => response.json())
-        .then(data => 
-            setTasks(data)
-            )
-    }
 
     function handleChange(e){
-        var name = e.target.name
-        var value = e.target.value
-        console.log('Name:', name)
-        console.log('Value: ', value)
+        const value = e.target.value
 
         setItem({
             ...activeItem, title:value
@@ -54,53 +34,22 @@ const Todo = () => {
 
     function handleSubmit(e){
         e.preventDefault()
-        console.log('ITEM: ', activeItem)
-
-        var csrftoken = getCookie('csrftoken');
-        var url = 'https://todoapphub.herokuapp.com/api/task-create/'
-
-        if(editing === true){
-            url = `https://todoapphub.herokuapp.com/api/task-update/${activeItem.id}/`
-            setEditing(false)
-            fetch(url, {
-                method:'PUT',
-                headers:{
-                    'Content-type':'application/json',
-                    'X-CSRFToken': csrftoken
-                },
-                body:JSON.stringify(activeItem)})
-                .then((response) => {
-                    fetchTasks()
-                    setItem({
-                        id: null,
-                        title: '',
-                        is_completed: false,
-                    })})
-                .catch(function(error){
-                console.log('ERROR: ', error)
-            })
-        }else{
-            fetch(url, {
-                method:'POST',
-                headers:{
-                    'Content-type':'application/json',
-                    'X-CSRFToken': csrftoken
-                },
-                body:JSON.stringify(activeItem)})
-                .then((response) => {
-                    fetchTasks()
-                    setItem({
-                        id: null,
-                        title: '',
-                        is_completed: false,
-                    })})
-                .catch(function(error){
-                console.log('ERROR: ', error)
-            })
+    
+        if(activeItem.title !== ''){
+            if(editing === true){
+                dispatch(editItem(activeItem))
+                setEditing(false)
+                setItem({ id: null,
+                    title: '',
+                    is_completed: false})
+            }else{
+                dispatch(addItem(activeItem))
+                setItem({ id: null,
+                    title: '',
+                    is_completed: false})
+            }
         }
-        
-        
-        }
+    }
 
     function edit(task){
         setItem(task)
@@ -108,56 +57,40 @@ const Todo = () => {
     }
     
     function deleteItem(task){
-        var csrftoken = getCookie('csrftoken')
-
-        fetch(
-            `https://todoapphub.herokuapp.com/api/task-delete/${task.id}/`, 
-            {method:'DELETE',
-            headers:{
-                'Content-type':'application/json',
-                'X-CSRFToken': csrftoken,
-            },
-            }).then((response) =>{
-                fetchTasks()
-            })
+        dispatch(deleteTask(task))
+        setEditing(false)
     }
 
     function editTaskStatus(task){
         task.is_completed = !task.is_completed
 
-        var csrftoken = getCookie('csrftoken')
-        var url = `https://todoapphub.herokuapp.com/api/task-update/${task.id}/`
-
-        fetch(url, {
-            method:'PUT',
-            headers:{
-                'Content-type':'application/json',
-                'X-CSRFToken': csrftoken,
-            },
-            body: JSON.stringify(task)
-        }).then((response) => {
-            fetchTasks()
-        })
+        dispatch(editItemStatus(task))
     }
     
     return (
+        
         <div className='container'>
-            
             <div id='task-container'>
                 <div id='form-wrapper'>
+                    <Logout></Logout>
                     <form onSubmit={handleSubmit}>
-                        <input maxLength={40} onChange={handleChange} name='title' value={activeItem.title} type="text" id='input-field' placeholder='Add Task...'/>
+                        <input maxLength={200} onChange={handleChange} name='title' value={activeItem.title} type="text" id='input-field' placeholder='Add Task...'/>
                         <button id='submit-button'> Add </button>
                     </form>
                 </div>
                 <div id='list-wrapper'>
-                {tasks.map(task => {
+                {tasks ?
+                    tasks.map(task => {
                         return <div  key={task.id} className='task-wrapper'>
                                     <button
                                         onClick={() => editTaskStatus(task)}
-                                        className='checkbox'>✔</button>
+                                        className='checkbox'
+                                    >
+                                        { task.is_completed ? '✔' : '' }
+                                    </button>
+
                                     <div className='task-title-wrapper' >
-                                        {task.is_completed === false ? 
+                                        { !task.is_completed ? 
                                         (
                                                 <span className='task-span'>{task.title}</span>
                                         ) : (
@@ -173,7 +106,8 @@ const Todo = () => {
                                     </div>
                                     
                                 </div>
-                    })}
+                    })
+                : null}
                 </div>
             </div>
 
@@ -182,4 +116,6 @@ const Todo = () => {
     )
 }
 
-export default Todo
+
+
+export default Todo;

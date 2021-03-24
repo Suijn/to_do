@@ -1,0 +1,113 @@
+#container{
+    height: 100vh;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#form{
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    background-color: #fff;
+    border-radius: 3%;
+    overflow: hidden;
+}
+#form-wrap{
+    padding: 20px 50px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+#form-footer{
+    background-color: #f6f6f6;
+    border-top: 1px solid #dce8f1;
+    padding: 25px;
+  
+}
+#span-wrapper{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    color:#92badd;
+}
+#span-wrapper:hover{
+    color:#455fa8;
+
+}
+.footer-span{
+    color:inherit;
+    font-weight: 400;
+}
+
+.logout-wrapper{
+    display: flex;
+    justify-content: center;
+}
+
+.logout_btn{
+    padding: 20px 40px;
+    margin-bottom: 25px;
+    border: 1px solid #f56969;
+    border-radius: 7px;
+    background-color: #fff;
+    color: #f56969;
+    transition: 0.3s ease;
+}
+
+.logout_btn:hover{
+    background-color: #f54747;
+    color: #fff;
+}
+
+.input-wrap{
+    min-width: 300px;
+}
+
+input{
+    width: 100%;
+    flex: 1;
+    border: 1px solid;
+    border-color: #CDD9ED;
+    border-radius: 7px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-align: center;
+    background-color: #f6f6f6;
+    transition: ease 0.3s;
+  }
+
+input:hover{
+    border-color: #39ace7;
+}
+  
+
+#submit-btn{
+    padding: 20px 0px;
+    min-width: 200px;
+    background-color: #56baed;
+    border-radius: 7px;
+    border: none;
+    color: #fff;
+    transition: ease 0.3s;
+}
+
+#submit-btn:hover{
+    background-color: #39ace7;
+}
+
+.alert-wrapper{
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    background-color:#ff8c8c;
+    /* opacity: 0.5; */
+    font-size: 15px;
+    border-bottom: 1px solid #ffbfbf;
+}
+.text-span{
+
+    color:#fff;
+
+}
