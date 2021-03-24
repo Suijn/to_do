@@ -13,7 +13,7 @@ import {getError} from './errorActions'
 
 
 export const getItems = () => (dispatch, getState) => {
-    axios.get('http://127.0.0.1:8000/api/task-list/', tokenConfig(getState))
+    axios.get('https://to-do-app-hub.herokuapp.com/api/task-list/', tokenConfig(getState))
         .then(res =>{
            if(res){
                 dispatch({
@@ -33,7 +33,7 @@ export const getItems = () => (dispatch, getState) => {
 
 export const addItem = ({title}) => (dispatch, getState) =>{
     const body = JSON.stringify({title})
-    axios.post('http://127.0.0.1:8000/api/task-create/', body, tokenConfig(getState))
+    axios.post('https://to-do-app-hub.herokuapp.com/api/task-create/', body, tokenConfig(getState))
         .then(res =>{
             dispatch({
                 type: ADD_ITEM,
@@ -55,7 +55,7 @@ export const addItem = ({title}) => (dispatch, getState) =>{
 
 export const editItem = ({id, title}) => (dispatch, getState) =>{
     const body = JSON.stringify({title})
-    axios.put(`http://127.0.0.1:8000/api/task-update/${id}/`, body, tokenConfig(getState))
+    axios.put(`https://to-do-app-hub.herokuapp.com/api/task-update/${id}/`, body, tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: EDIT_ITEM,
@@ -74,7 +74,7 @@ export const editItem = ({id, title}) => (dispatch, getState) =>{
 
 export const editItemStatus = ({id, title, is_completed}) => (dispatch, getState) => {
     const body = JSON.stringify({title, is_completed})
-    axios.put(`http://127.0.0.1:8000/api/task-update/${id}/`, body, tokenConfig(getState))
+    axios.put(`https://to-do-app-hub.herokuapp.com/api/task-update/${id}/`, body, tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: 'EDIT_TASK_STATUS',
@@ -92,7 +92,7 @@ export const editItemStatus = ({id, title, is_completed}) => (dispatch, getState
 }
 
 export const deleteTask = ({id}) => (dispatch, getState) => {
-    axios.delete(`http://127.0.0.1:8000/api/task-delete/${id}/`, tokenConfig(getState))
+    axios.delete(`https://to-do-app-hub.herokuapp.com/api/task-delete/${id}/`, tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: DELETE_ITEM,

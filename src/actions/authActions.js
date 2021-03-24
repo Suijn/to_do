@@ -31,8 +31,7 @@ export const loadUser = () => (dispatch, getState) => {
    
     // user loading
     dispatch({type:USER_LOADING});
-
-    axios.get(`http://127.0.0.1:8000/users/user/${user_id}`, tokenConfig(getState))
+    axios.get(`https://to-do-app-hub.herokuapp.com/users/user/${user_id}`, tokenConfig(getState))
         .then(res => dispatch({
             type: USER_LOADED,
             payload: res.data
@@ -57,7 +56,7 @@ export const register = ({username, password}) => (dispatch) => {
         }
     }
     const body = JSON.stringify({username, password})
-    axios.post('http://127.0.0.1:8000/users/register/', body, config)
+    axios.post('https://to-do-app-hub.herokuapp.com/users/register/', body, config)
         .then(res => dispatch({
                 type: REGISTER_SUCCESS,
                 // payload: res.data
@@ -81,7 +80,7 @@ export const login = ({username, password}) => (dispatch) => {
         }
     }
     const body = JSON.stringify({username, password})
-    axios.post('http://127.0.0.1:8000/users/login/', body, config)
+    axios.post('https://to-do-app-hub.herokuapp.com/users/login/', body, config)
         .then(res => {
             try{
                 dispatch({
