@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
 
 
-ALLOWED_HOSTS = ['to-do-app-hub2.herokuapp.com']
+ALLOWED_HOSTS = ['to-do-app-hub.herokuapp.com']
 
 
 # Application definition
