@@ -56,7 +56,7 @@ Link: https://todoapp-hub.herokuapp.com/
      <tr>
         <th> User </th>
 		<th>User restricted</th>
-        <td> /users/user/&lt;<str:pk>&gt;/ </td>
+        <td> /users/user/&lt;str:pk&gt;/ </td>
     </tr>
      <tr>
         <th>User List</th>
