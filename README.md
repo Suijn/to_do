@@ -1,5 +1,8 @@
 # To do app
 
+## Live
+Link: https://todoapp-hub.herokuapp.com/
+
 ## Technologies used:
 ### Backend
 - Django
@@ -73,6 +76,3 @@
 </table>
 
 
-
-## Live
-Link: https://todoapp-hub.herokuapp.com/
