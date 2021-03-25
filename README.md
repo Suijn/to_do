@@ -6,7 +6,7 @@ Link: https://todoapp-hub.herokuapp.com/
 ## Technologies used:
 ### Backend
 - Django REST
-- JWT authentication
+- JWT
 - Unittest
 
 ### Frontend
